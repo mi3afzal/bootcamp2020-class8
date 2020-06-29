@@ -1,26 +1,39 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useState, useEffect } from 'react';
 import './App.css';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+	const [repos, setRepos] = useState([{}]);
+
+	useEffect(() => {
+
+		async function fetchGitRepos() {
+			const apiRes = await fetch("https://api.github.com/users/mi3afzal/repos");
+			const data = await apiRes.json();
+			  console.log(data);
+			  setRepos(data)
+		}
+
+		fetchGitRepos();
+
+	}, []);
+
+	
+
+	return (
+		<div className="App">
+			<h1>All repos of <a href="https://github.com/mi3afzal/" target="blank">mi3afzal</a></h1>
+			<ol>
+				{repos.map((repoObj, index) => {
+					return (<li key={index}>
+						<span className="repo-name"><a href={repoObj.html_url} target="blank">{repoObj.name}</a></span> 
+						{ repoObj.description && 
+							<span className="repo-desc">(${repoObj.description})</span>
+						}
+					</li>)
+				})}
+			</ol>
+		</div>
+	);
 }
 
 export default App;
