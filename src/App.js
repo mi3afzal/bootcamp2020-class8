@@ -25,9 +25,9 @@ function App() {
 			<ol>
 				{repos.map((repoObj, index) => {
 					return (<li key={index}>
-						<span className="repo-name"><a href={repoObj.html_url} target="blank">{repoObj.name}</a></span> 
+						<span className="repo-name"> <a href={repoObj.html_url} target="blank">{repoObj.name}</a> </span> 
 						{ repoObj.description && 
-							<span className="repo-desc">(${repoObj.description})</span>
+							<span className="repo-desc"> (${repoObj.description}) </span>
 						}
 					</li>)
 				})}
